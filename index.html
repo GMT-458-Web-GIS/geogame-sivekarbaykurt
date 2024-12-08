@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gezegenimize Hoşgeldiniz</title>
+    <link rel="stylesheet" href="style.css"> <!-- CSS Bağlantısı -->
+</head>
+<body>
+    <h1>Gezegenimize Hoşgeldiniz</h1>
+    <div class="spaceship-container">
+        <img src="pngwing.com.png" alt="Uzay Mekiği" class="spaceship">
+    </div>
+    <button class="start-button" onclick="startGame()">Gezinti Başlasın</button>
+    
+    <img id="spaceship" src="spaceship.png" alt=""> <!-- alt metnini kaldırdım -->
+    <div id="sound-button" onclick="toggleSound()"></div>
+
+    <audio id="background-music" loop>
+        <source src="background-music.mp3" type="audio/mp3">
+    </audio>
+
+    <script>
+        // Oyun başlatma fonksiyonu
+        function startGame() {
+            window.location.href = 'second.html'; // İkinci sayfaya yönlendirme
+        }
+
+        // Müzik aç/kapa
+        const music = document.getElementById('background-music');
+        let isMusicPlaying = false;
+
+        function toggleSound() {
+            if (isMusicPlaying) {
+                music.pause();
+            } else {
+                music.play();
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        // Sayfa yüklendiğinde müziği başlat
+        window.onload = function() {
+            toggleSound();
+        }
+    </script>
+</body>
+</html>

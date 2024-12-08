@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Adı Girişi</title>
+    <style>
+        body {
+            background-image: url('earth1.jpg'); /* Arka plan resmi */
+            background-size: cover; /* Resmi tam olarak kapla */
+            background-position: center; /* Ortala */
+            height: 100vh; /* Sayfa yüksekliği */
+            display: flex; /* Flexbox kullanarak ortalama */
+            flex-direction: column; /* Dikey yerleşim */
+            justify-content: center; /* Dikeyde ortala */
+            align-items: center; /* Yatayda ortala */
+            margin: 0; /* Varsayılan margin'i sıfırla */
+            font-family: Arial, sans-serif;
+        }
+        h1 {
+            font-size: 36px; /* Başlık font büyüklüğü */
+            color: rgb(65, 141, 216); /* Yazı rengi */
+            text-align: center; /* Metni ortala */
+            margin: 1;
+            font-size: 3rem;
+            position: absolute;
+            top: 0;
+            left: 50% ;
+            transform: translatex(-50%)
+            
+        }
+        input {
+            padding: 10px;
+            font-size: 16px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            width: 200px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: hsl(230, 61%, 41%);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kullanıcı Adı Girişi</h1> <!-- Yeni başlık eklendi -->
+    <input type="text" id="username" placeholder="Kullanıcı Adınızı Girin">
+    <button class="continue-button" onclick="continueToNextPage()">Devam Et</button>
+
+    <script>
+        function continueToNextPage() {
+            const username = document.getElementById("username").value;
+
+            if (username.trim() === "") {
+                alert("Lütfen bir kullanıcı adı girin.");
+                return;
+            }
+
+            // Kullanıcı adını localStorage'a kaydet
+            localStorage.setItem("username", username);
+
+            // Oyuna başla
+            window.location.href = 'third.html'; // Oyunun başladığı sayfa
+        }
+    </script>
+</body>
+</html>

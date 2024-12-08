@@ -1,0 +1,233 @@
+/* Sayfanın temel stil ayarları */
+body {
+    margin: 0; /* Varsayılan margin'i sıfırla */
+    padding: 0; /* Varsayılan padding'i sıfırla */
+    height: 100vh; /* Sayfa yüksekliğini %100 yap */
+    width: 100vw; /* Sayfa genişliğini %100 yap */
+    overflow: hidden; /* Taşma olmasın */
+    font-family: Arial, sans-serif;
+    background: url('earth1.jpg') no-repeat center center;
+    background-size: cover; /* Arka planı tüm ekranı kaplayacak şekilde ayarla */
+}
+
+
+/* "Gezegenimize Hoşgeldiniz" yazısı */
+h1 {
+    color: rgb(65, 141, 216);
+    text-align: center;
+    margin: 1; /* Üstten ve alttan boşluk bırakma */
+    font-size: 3rem;
+    position: absolute; /* Başlığı mutlak pozisyonda konumlandır */
+    top: 0; /* Sayfanın üst kısmında */
+    left: 50%; /* Sol kenardan %50 uzaklık */
+    transform: translateX(-50%); /* Yazıyı tam ortaya almak için kullanılır */
+}
+
+
+
+/* Start butonu */
+.start-button {
+    position: absolute; /* Butonu sabitle */
+    bottom: 40px; /* Sayfanın altından 50px yukarıda olacak şekilde konumlandır */
+    left: 50%; /* Sol kenardan %50 uzaklık */
+    transform: translateX(-50%); /* Butonu tam ortaya almak için kullanılır */
+    padding: 15px 30px;
+    font-size: 1.5rem;
+    color: white;
+    background-color: hsl(230, 61%, 41%);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.start-button:hover {
+    background-color: #212888;
+}
+
+/* Uzay mekiği konteyneri */
+.spaceship-container {
+    position: absolute; /* Konumlandırmayı mutlak yap */
+    top: 50%; /* Sayfanın ortasına yerleştir */
+    left: 50%;
+    transform: translate(-50%, -50%); /* Tam ortalamak için */
+    z-index: 1; /* Diğer öğelerin üstünde görünmesi için */
+}
+
+/* Uzay mekiği */
+.spaceship {
+    width: 100px; /* Görselin genişliği */
+    height: auto; /* Orantılı yükseklik */
+    animation: spin 4s linear infinite; /* Dönme animasyonu */
+}
+
+/* Dönme animasyonu */
+@keyframes spin {
+    from {
+        transform: rotate(0deg) translatex(210px); /* Başlangıç pozisyonu */
+    }
+    to {
+        transform: rotate(360deg) translatex(210px); /* Tam dönüş */
+    }
+}
+
+
+/* Ses butonu sağ altta */
+#sound-button {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    background: url('sound-icon.png') no-repeat center center/cover; /* Ses ikonu */
+    cursor: pointer;
+}
+
+
+/* ikinci sayfa burdan itibaren */
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Sayfa yüksekliğini doldur */
+}
+
+h1 {
+    color: rgb(65, 141, 216);
+    margin-bottom: 20px;
+}
+
+input {
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1rem;
+    cursor: pointer;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    height: 100vh; /* Sayfanın yüksekliğini tam doldur */
+    background-image: url('earth1.jpg'); /* Arka plan resmi dosya adı */
+    background-size: cover; /* Resmi tam sayfaya yay */
+    background-position: center; /* Resmi ortala */
+    display: flex; /* İçeriği ortalamak için flex kullan */
+    justify-content: center; /* Yatayda ortala */
+    align-items: center; /* Dikeyde ortala */
+}
+
+.container {
+    text-align: center; /* Metni ortala */
+    color: white; /* Metin rengini beyaz yap */
+}
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+#map {
+    height: 100%;
+    width: 70%;
+    float: left;
+    z-index: 1; /* Set z-index lower than the stork */
+}
+
+#stork {
+    position: absolute;
+    width: 120px;
+    transition: all 1s ease;
+    z-index: 100; /* Leyleği haritanın üstüne yerleştir */
+}
+
+#countryName {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 10; /* Optional: ensure country name appears above the map */
+}
+
+#score {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 10; /* Optional: ensure score appears above the map */
+}
+
+
+#stork {
+    position: absolute;
+    width: 120px;
+    transition: all 1s ease;
+    z-index: 100; /* Leyleği haritanın üstüne yerleştir */
+    bottom: 20px; /* Sağ alt köşede yerleştirmek için */
+    right: 20px; /* Sağ alt köşede yerleştirmek için */
+}
+
+
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+#map {
+    height: 100%;
+    width: 70%;
+    float: left;
+    z-index: 1; /* Set z-index lower than the stork */
+}
+
+#stork {
+    position: absolute;
+    width: 120px;
+    transition: all 1s ease;
+    z-index: 100; /* Leyleği haritanın üstüne yerleştir */
+    bottom: 20px; /* Sağ alt köşede yerleştirmek için */
+    right: 20px; /* Sağ alt köşede yerleştirmek için */
+}
+
+#countryName {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 24px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    border-radius: 5px;
+    z-index: 10; /* Optional: ensure country name appears above the map */
+}
+
+#score {
+    position: absolute;
+    top: 70px;
+    right: 20px;
+    font-size: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    padding: 5px;
+    border-radius: 5px;
+    z-index: 10; /* Optional: ensure score appears above the map */
+}
+
+
+

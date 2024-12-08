@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sonuç Sayfası</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-image: url('earth1.jpg'); /* Arka plan resmi ekle */
+            background-size: cover; /* Resmi kapsayacak şekilde ayarla */
+            background-position: center; /* Resmi ortala */
+            font-family: Arial, sans-serif;
+        }
+        #result {
+            background: rgba(255, 255, 255, 0.8); /* Sayfanın iç kısmı için hafif beyaz arka plan */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        #playAgain {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        #playAgain:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div id="result">
+        <h1>Oyun Bitti!</h1>
+        <p id="usernameInfo"></p>
+        <p id="scoreInfo"></p>
+        <button id="playAgain">Tekrar Oyna</button>
+    </div>
+
+    <script>
+        // URL'den gerekli bilgileri al
+        const urlParams = new URLSearchParams(window.location.search);
+        const score = urlParams.get('score') || 0;
+        const correctAnswers = urlParams.get('correct') || 0;
+        const wrongAnswers = urlParams.get('wrong') || 0;
+
+        // localStorage'dan kullanıcı adını al
+        const username = localStorage.getItem("username") || "Bilinmeyen Kullanıcı";
+
+        // Sonuç bilgilerini sayfada göster
+        document.getElementById("usernameInfo").innerText = `Kullanıcı Adı: ${username}`;
+        document.getElementById("scoreInfo").innerText = 
+            `Doğru: ${correctAnswers}\nYanlış: ${wrongAnswers}\nSkor: ${score}`;
+
+        // Tekrar oynamak için butona tıklandığında ana sayfaya dön
+        document.getElementById("playAgain").addEventListener("click", function() {
+            localStorage.removeItem("username"); // Kullanıcı adını sıfırla
+            window.location.href = "index.html"; // Ana oyun sayfasına yönlendirme
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ülke Bulma Oyunu</title>
+    <link rel="stylesheet" href="style.css"> 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="script.js" defer></script>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        #map {
+            height: 100%;
+            width: 70%;
+            float: left;
+            position: relative;
+        }
+        #stork {
+            position: absolute;
+            width: 120px;
+            transition: all 1s ease;
+            z-index: 100; /* Leyleği haritanın üstüne yerleştir */
+        }
+        #countryName {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 24px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 5px;
+        }
+        #score {
+            position: absolute;
+            top: 70px;
+            right: 20px;
+            font-size: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <img id="stork" src="bebisleylek.png" alt="Leylek" />
+    <div id="countryName"></div>
+    <div id="score">Puan: 0</div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        const countries = [
+    { name: "Rusya", coords: [61.5240, 105.3188] },
+    { name: "Kanada", coords: [56.1304, -106.3468] },
+    { name: "Amerika Birleşik Devletleri", coords: [37.0902, -95.7129] },
+    { name: "Çin", coords: [35.8617, 104.1954] },
+    { name: "Brezilya", coords: [-14.2350, -51.9253] },
+    { name: "Avustralya", coords: [-25.2744, 133.7751] },
+    { name: "Hindistan", coords: [20.5937, 78.9629] },
+    { name: "Arjantin", coords: [-38.4161, -63.6167] },
+    { name: "Kazakhstan", coords: [48.0196, 66.9237] },
+    { name: "Cezayir", coords: [28.0339, 1.6596] },
+    { name: "Demokratik Kongo Cumhuriyeti", coords: [-4.0383, 21.7587] },
+    { name: "Sudan", coords: [12.8628, 30.8025] },
+    { name: "Libya", coords: [26.3351, 17.2283] },
+    { name: "Çad", coords: [15.4542, 18.7322] },
+    { name: "Nijerya", coords: [9.081999, 8.6753] },
+    { name: "Meksika", coords: [23.6345, -102.5528] },
+    { name: "Endonezya", coords: [-0.7893, 113.9213] },
+    { name: "Pakistan", coords: [30.3753, 69.3451] },
+    { name: "Moğolistan", coords: [42.5028, 105.8055] },
+    { name: "Büyük Britanya", coords: [55.3781, -3.4360] },
+    { name: "Fransa", coords: [46.6034, 1.8883] },
+    { name: "İtalya", coords: [41.8719, 12.5674] },
+    { name: "Güney Afrika", coords: [-30.5595, 22.9375] },
+    { name: "Bolivya", coords: [-16.2902, -63.5887] },
+    { name: "Şili", coords: [-35.6751, -71.5430] },
+    { name: "Mısır", coords: [26.8206, 30.8025] },
+    { name: "Kolombiya", coords: [4.5709, -74.2973] },
+    { name: "İran", coords: [32.4279, 53.6880] },
+    { name: "Afganistan", coords: [33.9391, 67.7100] },
+    { name: "Zambiya", coords: [-13.1339, 27.8493] },
+    { name: "Kırgızistan", coords: [41.2044, 74.7661] },
+    { name: "Venezuela", coords: [6.4238, -66.5897] },
+    { name: "Mozambik", coords: [-18.6657, 35.5296] },
+    { name: "Madagaskar", coords: [-18.7669, 46.8691] },
+    { name: "Somali", coords: [5.1521, 46.1996] },
+    { name: "Zaire", coords: [-4.0383, 21.7587] },
+    { name: "Tanzanya", coords: [-6.369028, 34.888822] },
+    { name: "Ekvador", coords: [-1.8312, -78.1834] },
+    { name: "Mali", coords: [17.5707, -3.9962] },
+    { name: "Nijer", coords: [17.6078, 8.0817] },
+    { name: "Etyopya", coords: [9.145, 40.4897] },
+    { name: "Türkiye", coords: [38.9637, 35.2433] },
+    { name: "Norveç", coords: [60.4720, 8.4689] },
+    { name: "Almanya", coords: [51.1657, 10.4515] },
+    { name: "Çin", coords: [35.8617, 104.1954] },
+    { name: "Nepal", coords: [28.3949, 84.1240] },
+    { name: "Fas", coords: [31.7917, -7.0926] },
+    { name: "Suriye", coords: [34.8021, 38.9968] },
+    { name: "İngiltere", coords: [55.3781, -3.4360] },
+    { name: "Kamerun", coords: [3.8480, 11.5021] },
+    { name: "Gabon", coords: [0.8037, 11.6094] },
+    { name: "Gana", coords: [7.9465, -1.0232] },
+    { name: "Kuzey Kore", coords: [40.3399, 127.5101] },
+    { name: "Ekvator Ginesi", coords: [1.6508, 10.2679] }
+];
+
+
+        let score = 0;
+        let selectedCountry = null;
+        let timer;
+        const gameDuration = 60; // 1 dakika
+
+        const map = L.map('map').setView([20, 0], 2);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        function startGame() {
+            score = 0;
+            document.getElementById("score").innerText = "Puan: " + score;
+            selectRandomCountry();
+            startTimer();
+        }
+
+        function selectRandomCountry() {
+            selectedCountry = countries[Math.floor(Math.random() * countries.length)];
+            document.getElementById("countryName").innerText = selectedCountry.name;
+        }
+
+        function startTimer() {
+            let timeLeft = gameDuration;
+            timer = setInterval(() => {
+                timeLeft--;
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    const userConfirmed = confirm("Oyun bitti! Toplam Puan: " + score + "\nTamam butonuna basarak puan sayfasına geçebilirsiniz.");
+                    if (userConfirmed) {
+                        window.location.href = "skor.html?score=" + score; // 4. sayfaya yönlendir
+                    }
+                }
+            }, 1000);
+        }
+
+        map.on('click', function(e) {
+            const latlng = e.latlng;
+            const clickedCountry = countries.find(country => {
+                return latlng.lat > (country.coords[0] - 5) && latlng.lat < (country.coords[0] + 5) &&
+                       latlng.lng > (country.coords[1] - 5) && latlng.lng < (country.coords[1] + 5);
+            });
+
+            if (clickedCountry) {
+                if (clickedCountry.name === selectedCountry.name) {
+                    score++;
+                    document.getElementById("score").innerText = "Puan: " + score;
+                    moveStorkToCountry(clickedCountry);
+                } else {
+                    alert("Yanlış! Tekrar deneyin.");
+                }
+            }
+        });
+
+        function moveStorkToCountry(country) {
+    const targetLatLng = L.latLng(country.coords[0], country.coords[1]);
+    const point = map.latLngToContainerPoint(targetLatLng); // Haritadaki koordinatları piksel değerine çevir
+
+    const stork = document.getElementById("stork");
+    const mapRect = document.getElementById("map").getBoundingClientRect(); // Haritanın ekran üzerindeki konumunu al
+
+    // Leyleğin koordinatlarını hesaplarken haritanın pozisyonunu da hesaba kat
+    const storkX = mapRect.left + point.x - stork.offsetWidth / 2;
+    const storkY = mapRect.top + point.y - stork.offsetHeight / 2;
+
+    // Leyleği belirtilen koordinata taşı
+    stork.style.left = `${storkX}px`;
+    stork.style.top = `${storkY}px`;
+
+    // Bir sonraki ülkeye geçmeden önce 1 saniye bekle
+    setTimeout(() => {
+        selectRandomCountry();
+    }, 1000);
+}
+
+
+        startGame();
+    </script>
+</body>
+</html>
